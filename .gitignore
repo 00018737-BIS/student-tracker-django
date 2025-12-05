@@ -1,0 +1,43 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Static & media in dev
+/staticfiles/
+/mediafiles/
+
+# VS Code / PyCharm / etc.
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac
+.DS_Store
