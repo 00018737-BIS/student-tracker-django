@@ -27,12 +27,10 @@ NUL
 # Django specific
 *.log
 local_settings.py
-db.sqlite3
 db.sqlite3-journal
 media/
 
 # Static & media in dev
-/staticfiles/
 /mediafiles/
 
 # VS Code / PyCharm / etc.

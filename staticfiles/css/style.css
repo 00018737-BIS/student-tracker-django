@@ -1,0 +1,105 @@
+/* Responsive & Modern Enhancements */
+.subject-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px !important;
+}
+
+.subject-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header-custom {
+  background: linear-gradient(135deg, var(--primary), #6c8ef0);
+  border-radius: 12px 12px 0 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-header-custom::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  animation: shimmer 4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Responsive Typography */
+@media (max-width: 576px) {
+  .display-6 {
+    font-size: 1.8rem;
+  }
+  .card-header-custom h4 {
+    font-size: 1.1rem;
+  }
+  .card-header-custom p {
+    font-size: 0.85rem;
+  }
+  .btn-sm {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .row-cols-md-2 > .col {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* Better spacing on large screens */
+@media (min-width: 1200px) {
+  .row-cols-lg-3 > .col {
+    flex: 0 0 31%;
+    max-width: 31%;
+  }
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px);
+}
+
+.subject-card {
+  transition: all 0.3s ease;
+  border-radius: 12px !important;
+}
+
+.subject-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+.card-header-custom {
+  background: linear-gradient(135deg, var(--primary), #6c8ef0);
+}
+
+/* Make buttons full-width on mobile, normal width on larger screens */
+@media (max-width: 767.98px) {
+  .d-md-flex > .btn {
+    font-size: 0.9rem;
+  }
+}
