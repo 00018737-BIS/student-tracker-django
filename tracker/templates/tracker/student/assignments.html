@@ -1,0 +1,65 @@
+{% extends "tracker/student_base.html" %}
+{% load static %}
+
+{% block page_title %}Assignments{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5>My Assignments</h5>
+    </div>
+</div>
+
+{% if assignments %}
+    <div class="row">
+        {% for assignment in assignments %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 {% if assignment.is_overdue %}border-danger{% elif assignment.is_submitted %}border-success{% endif %}">
+                <div class="card-header {% if assignment.is_overdue %}bg-danger text-white{% elif assignment.is_submitted %}bg-success text-white{% else %}bg-light{% endif %}">
+                    <h6 class="mb-0">
+                        {{ assignment.subject.code }} - {{ assignment.title }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ assignment.description|truncatewords:20 }}</p>
+                    <hr>
+                    <p class="mb-2">
+                        <strong>Due:</strong> {{ assignment.deadline|date:"F d, Y g:i A" }}
+                    </p>
+                    <p class="mb-2">
+                        <strong>Subject:</strong> {{ assignment.subject.name }}
+                    </p>
+                    
+                    {% if assignment.is_submitted %}
+                        <div class="alert alert-success mt-3 fw-bold">Submitted
+                            {% if assignment.submission.grade %}
+                                <br>Grade: {{ assignment.submission.grade }}
+                            {% endif %}
+                        </div>
+                    {% elif assignment.is_overdue %}
+                        <div class="alert alert-danger mt-3">
+                            <i class="fas fa-exclamation-triangle"></i> Overdue
+                        </div>
+                    {% else %}
+                        <a href="{% url 'submit_assignment' assignment.id %}" class="btn btn-primary btn-block mt-3">
+                            Submit Assignment
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning">
+        <i class="fas fa-info-circle"></i> No assignments available yet.
+        <hr>
+        <small>Possible reasons:</small>
+        <ul>
+            <li>No assignments have been created yet</li>
+            <li>You are not enrolled in any subjects</li>
+            <li>Your enrolled subjects don't have assignments</li>
+        </ul>
+    </div>
+{% endif %}
+{% endblock %}

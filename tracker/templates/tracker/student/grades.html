@@ -1,0 +1,85 @@
+{% extends "tracker/student_base.html" %}
+{% load static %}
+
+{% block page_title %}My Grades{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5>My Grades & Feedback</h5>
+    </div>
+</div>
+
+{% if submissions %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Assignment</th>
+                    <th>Subject</th>
+                    <th>Submitted On</th>
+                    <th>Grade</th>
+                    <th>Feedback</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in submissions %}
+                <tr>
+                    <td>{{ submission.assignment.title }}</td>
+                    <td>{{ submission.assignment.subject.code }}</td>
+                    <td>{{ submission.submitted_at|date:"M d, Y g:i A" }}</td>
+                    <td>
+                        {% if submission.grade %}
+                            <span class="badge bg-success">{{ submission.grade }}</span>
+                        {% else %}
+                            <span class="badge bg-warning">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if submission.feedback %}
+                            <button class="btn btn-sm btn-info" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#feedbackModal{{ submission.id }}">
+                                View
+                            </button>
+                            
+                            <div class="modal fade" id="feedbackModal{{ submission.id }}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Feedback</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+                                            <p><strong>Grade:</strong> {{ submission.grade }}</p>
+                                            <hr>
+                                            <p>{{ submission.feedback }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <span class="text-muted">No feedback yet</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ submission.file.url }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                            Download
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> No submissions yet. Submit your assignments to see grades here.
+    </div>
+{% endif %}
+{% endblock %}

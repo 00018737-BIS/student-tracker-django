@@ -1,0 +1,57 @@
+{% extends "tracker/teacher_base.html" %}
+
+{% block page_title %}My Classes{% endblock %}
+
+{% block content %}
+
+<div class="row mt-5 text-center">
+    <div class="col-12">
+        <h1 class="display-5 fw-bold text-dark mb-3">
+            Welcome <span class="text-success">{{ user.get_full_name|default:user.username }}</span>!
+        </h1>
+    </div>
+</div>
+
+{% if subjects %}
+    <div class="row g-5 justify-content-center mt-4">
+        {% for subject in subjects %}
+        <div class="col-lg-4 col-md-6">
+            <div class="card teacher-card h-100">
+                <div class="card-header-teacher">
+                    <h3 class="mb-1">{{ subject.name }}</h3>
+                    <h5 class="opacity-90">{{ subject.code }}</h5>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <p class="text-muted mb-4 fw-bold">
+                        {{ subject.enrollment_set.count }} Student{{ subject.enrollment_set.count|pluralize }}
+                    </p>
+
+                    <div class="d-grid gap-3">
+                        <a href="{% url 'mark_attendance' subject.id %}" 
+                           class="btn btn-success btn-teacher">
+                            Mark Attendance
+                        </a>
+
+                        <a href="{% url 'teacher_assignments' subject.id %}" 
+                           class="btn btn-outline-primary btn-teacher">
+                            View & Grade Assignments
+                        </a>
+
+                        <a href="{% url 'create_assignment' subject.id %}" 
+                           class="btn btn-outline-success btn-teacher">
+                            Create Assignment
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center py-5 mt-5">
+        <h3 class="text-muted">No classes assigned yet</h3>
+        <p class="lead text-muted">Contact admin to assign you subjects.</p>
+    </div>
+{% endif %}
+
+{% endblock %}

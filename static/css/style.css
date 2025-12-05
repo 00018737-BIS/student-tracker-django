@@ -1,0 +1,79 @@
+:root {
+  --primary: #4e73df;
+  --success: #1cc88a;
+  --danger: #e74a3b;
+  --warning: #f6c23e;
+  --info: #36b9cc;
+  --dark: #2c3e50;
+  --dark-hover: #34495e;
+  --light-bg: #f8f9fc;
+  --border: #e3e6f0;
+  --text: #5a5c69;
+}
+*,
+*::before,
+*::after {
+  transition: none !important;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-bg);
+  padding-top: 90px; 
+  min-height: 100vh;
+}
+
+.navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px 15px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0 !important;
+    padding: 15px;
+  }
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  overflow: hidden;
+  transition: none !important;
+}
+
+.card:hover {
+  transform: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-header-custom {
+  background: var(--primary);
+  color: white;
+  padding: 1.5rem;
+  font-weight: 600;
+}
+
+.btn-action {
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  transition: none !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: transparent;
+}

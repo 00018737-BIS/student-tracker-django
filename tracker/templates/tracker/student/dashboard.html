@@ -1,0 +1,73 @@
+{% extends "tracker/student_base.html" %}
+{% load static %}
+
+{% block page_title %}My Subjects{% endblock %}
+
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-12 text-center mb-5">
+        <h1 class="display-5 fw-bold text-dark">
+            Welcome back, <span class="text-primary">{{ user.get_full_name|default:user.username }}</span>!
+        </h1>
+        <p class="lead text-muted">Here are your subjects. Tap any card to get started.</p>
+    </div>
+</div>
+
+{% if enrolled_subjects %}
+    <div class="row g-4 justify-content-center">
+        {% for item in enrolled_subjects %}
+        {% with subject=item.subject %}
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card subject-card shadow-lg h-100">
+                <div class="card-header-custom text-white">
+                    <h4 class="mb-1">{{ subject.name }}</h4>
+                    <p class="mb-0 opacity-90"><strong>{{ subject.code }}</strong> • {{ item.teacher_name }}</p>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="row text-center mb-4">
+                        <div class="col-6">
+                            <h3 class="text-success fw-bold">{{ item.attendance_percentage|floatformat:0 }}%</h3>
+                            <small class="text-muted">Attendance</small>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="fw-bold {% if item.overdue_assignments > 0 %}text-danger{% else %}text-primary{% endif %}">
+                                {{ item.pending_assignments }}
+                                {% if item.overdue_assignments > 0 %}
+                                    <span class="badge bg-danger ms-1">+{{ item.overdue_assignments }}</span>
+                                {% endif %}
+                            </h3>
+                            <small class="text-muted">Assignments</small>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="{% url 'attendance' subject.id %}" 
+                           class="btn btn-outline-primary btn-action">
+                            Attendance
+                        </a>
+                        <a href="{% url 'assignments_by_subject' subject.id %}" 
+                        class="btn btn-outline-info btn-action">
+                            Assignments
+                        </a>
+                        <a href="{% url 'grades' %}?subject={{ subject.id }}" 
+                           class="btn btn-outline-success btn-action">
+                            Grades
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-book-open fa-5x text-muted mb-4"></i>
+        <h3 class="text-muted">No subjects yet</h3>
+        <p class="lead text-muted">You'll see your classes here once you're enrolled.</p>
+    </div>
+{% endif %}
+
+{% endblock %}

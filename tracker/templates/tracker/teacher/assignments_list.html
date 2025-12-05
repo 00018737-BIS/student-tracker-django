@@ -1,0 +1,51 @@
+{% extends "tracker/teacher_base.html" %}
+{% block page_title %}Assignments - {{ subject.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'teacher_dashboard' %}" class="btn btn-outline-secondary mb-4">
+        Back to Classes
+    </a>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">
+            Assignments — {{ subject.name }} ({{ subject.code }})
+        </h2>
+        <a href="{% url 'create_assignment' subject.id %}" class="btn btn-primary btn-lg">
+            Create Assignment
+        </a>
+    </div>
+
+    <hr class="mb-4">
+
+    {% if assignments %}
+        {% for assignment in assignments %}
+        <div class="card mb-3 shadow-sm border-0">
+            <div class="card-body d-flex justify-content-between align-items-center py-4">
+                <div>
+                    <h5 class="mb-1 fw-bold">{{ assignment.title }}</h5>
+                    <small class="text-muted">
+                        Due: {{ assignment.deadline|date:"d M Y, h:i A" }}
+                        &nbsp;|&nbsp;
+                        {{ assignment.submission_set.count }} submission{{ assignment.submission_set.count|pluralize }}
+                    </small>
+                </div>
+                <div>
+                    <a href="{% url 'grade_submissions' assignment.id %}" 
+                       class="btn btn-success">Grade
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-5 mt-5">
+            <i class="fas fa-tasks fa-5x text-muted mb-4 opacity-50"></i>
+            <h4 class="text-muted">No assignments yet</h4>
+            <p class="lead text-muted">
+                Start by creating your first assignment using the button above.
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
